@@ -8,23 +8,67 @@
     <title>About Us - Best Cars</title>
 </head>
 <body>
-    <div class="navbar-header">
-        <a class="navbar-brand" href="">Home</a>
-    </div>
-    <nav class="navbar navbar-light bg-dark">
-        <ul class='navbar-nav navbar-right'>
-            <li class="nav-item">
-                <a class='nav-link' href="{% url 'djangoapp:about' %}">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a class='nav-link' href="">Contact Us</a>
-            </li>
-        </ul>
-    </nav>
+    <nav class="navbar-dark navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Best Cars</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" aria-current="page" href="#">Home</a>
+              <a class='nav-link active' href="{% url 'djangoapp:about' %}">About Us</a>
+              <a class="nav-link" href="#">Contact Us</a>
+            </div>
+          </div>
+        </div>
+    </nav></br>
     <div class='container-fluid'>
-        <h1>
+        <h2 class="text-center">
             Welcome to Best Cars dealership, home to the best cars in North America. We sell domestic and imported cars at reasonable prices.
-        </h1>
+        </h2>
+        <p >We sell a variety of car brands that you can see in the table below.</p>
     </div>
+    <div>
+        <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Mazda</th>
+                <td>2, 3, 6, CX-3, CX-5, CX-7, CX-30. CX-50</td>
+                <td>2010-New</td>
+              </tr>
+              <tr>
+                <th scope="row">Honda</th>
+                <td>Civic, Accord, CR-V, HR-V, Odyssey, Pilot</td>
+                <td>2012-New</td>
+              </tr>
+              <tr>
+                <th scope="row">Toyota</th>
+                <td>Corolla, Camry, RAV-4, Highlander, 4Runner</td>
+                <td>2014-New</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <div class="container text-center">
+        <div class="row">
+          <div class="col">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Mazda_CX-5_%28KF%29_1X7A0333.jpg" height=700px width=700px class="img-thumbnail" alt="Mazda CX-5">
+          </div>
+          <div class="col">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/2018_Honda_CR-V_%28RW_MY18%29_%2BSport_2WD_wagon_%282018-10-22%29_01.jpg" height=700px width=700px class="img-thumbnail" alt="Honda CR-v">
+          </div>
+          <div class="col">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Toyota_RAV4_Monrepos_2019_IMG_1894.jpg/800px-Toyota_RAV4_Monrepos_2019_IMG_1894.jpg" height=700px width=700px class="img-thumbnail" alt="Toyote Rav-4">
+          </div>
+        </div>
+      </div>
 </body>
 </html>
