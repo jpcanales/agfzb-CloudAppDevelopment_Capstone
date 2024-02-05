@@ -63,7 +63,34 @@ def get_dealers_from_cf(url, **kwargs):
 
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
-# def get_dealer_by_id_from_cf(url, dealerId):
+def get_dealer_by_id_from_cf(url, dealerId):
+    results = []
+    # Call get_request with a URL parameter
+    json_result = get_request(url)
+    print(json_result)
+    if json_result:
+        # Get the row list in JSON as dealers
+        dealers = json_result
+        # For each dealer object
+        for dealer in dealers:
+            # Get its content in `doc` object
+            dealer_doc = dealer
+            if dealer_doc.get("id") == dealer_id:
+                return CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
+                                   id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
+                                   short_name=dealer_doc["short_name"],
+                                   st=dealer_doc["st"], zip=dealer_doc["zip"])
+            # Create a CarDealer object with values in `doc` object
+            
+    return None
+
+    result = get_dealer_by_id_from_cf(url, desired_id)
+    if result:
+    # Do something with the dealer information
+        print(result.full_name, result.address, result.city, ...)
+    else:
+        print("Dealer not found.")
+
 # - Call get_request() with specified arguments
 # - Parse JSON results into a DealerView object list
 
