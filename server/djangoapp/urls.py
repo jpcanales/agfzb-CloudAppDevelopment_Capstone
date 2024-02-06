@@ -24,9 +24,9 @@ urlpatterns = [
     path('contact/', view=views.contact, name='contact'),
     path('login/', view=views.login_request, name='login'),
     path('logout/', view=views.logout_request, name='logout'),
-    path('registration/', view=views.registration_request, name='registration')
+    path('registration/', view=views.registration_request, name='registration'),
     # path for dealer reviews view
-
+    path('dealer/<int:dealer_id>/', view=views.get_dealer_details, name='dealer_details'),
     # path for add a review view
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

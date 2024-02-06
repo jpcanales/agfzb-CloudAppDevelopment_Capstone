@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import CarDealer, CarMake, CarModel # from .models import related models
-from .restapis import get_dealers_from_cf
+from .models import CarDealer, CarMake, CarModel, DealerReview # from .models import related models
+from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -91,8 +91,13 @@ def get_dealerships(request):
         return HttpResponse(dealer_names)
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
+def get_dealer_details(request, dealer_id):
+    if request.method == "GET":
+        url= "https://jpcanalesz-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+        reviews = get_dealer_reviews_from_cf(url, dealerId=dealer_id)
+        dealer_reviews = ' '.join([dealer.review for review in reviews])
+        return HttpResponse(dealer_reviews)
+
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):

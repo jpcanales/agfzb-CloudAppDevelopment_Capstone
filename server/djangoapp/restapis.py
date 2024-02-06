@@ -1,10 +1,7 @@
 import requests
 import json
-from .models import CarDealer # import related models here
+from .models import CarDealer, DealerReview  # import related models here
 from requests.auth import HTTPBasicAuth
-
-
-# Create a `get_request` to make HTTP GET requests
 
 # Create a `get_request` to make HTTP GET requests
 def get_request(url, **kwargs):
@@ -63,10 +60,33 @@ def get_dealers_from_cf(url, **kwargs):
 
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
-def get_dealer_by_id_from_cf(url, dealerId):
+def get_dealer_reviews_from_cf(url, **kwargs):
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url)
+    dealer_id = kwargs.get('dealer_id')
+    json_result = get_request(url, dealerId=dealer_id)
+    print(json_result)
+    if json_result:
+        # Get the row list in JSON as dealers
+        dealers = json_result
+        # For each dealer object
+        for dealer_doc in dealers:
+            # Get its content in `doc` object
+            # Create a CarDealer object with values in `doc` object
+            dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
+                                   id=dealer_doc["id"], review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"],
+                                   car_make=dealer_doc["car_make"], car_model=dealer_doc["car_model"],
+                                   car_year=dealer_doc["car_year"], sentiment=dealer_doc["sentiment"])
+            results.append(dealer_obj)
+
+    return results
+
+
+# Get dealer by id
+def get_dealer_by_id_from_cf(url, **kwargs):
+    results = []
+    # Call get_request with a URL parameter
+    json_result = get_request(url, dealerId=dealerId)
     print(json_result)
     if json_result:
         # Get the row list in JSON as dealers
@@ -75,7 +95,7 @@ def get_dealer_by_id_from_cf(url, dealerId):
         for dealer in dealers:
             # Get its content in `doc` object
             dealer_doc = dealer
-            if dealer_doc.get("id") == dealer_id:
+            if dealer_doc.get("id") == dealerId:
                 return CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
                                    id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
                                    short_name=dealer_doc["short_name"],
@@ -84,7 +104,7 @@ def get_dealer_by_id_from_cf(url, dealerId):
             
     return None
 
-    result = get_dealer_by_id_from_cf(url, desired_id)
+    result = get_dealer_by_id_from_cf(url, dealerId)
     if result:
     # Do something with the dealer information
         print(result.full_name, result.address, result.city, ...)
