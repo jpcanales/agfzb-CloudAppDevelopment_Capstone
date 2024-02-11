@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import CarDealer, DealerReview, CarModel# from .models import related models
-from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf
+from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, post_request
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -159,7 +159,7 @@ def add_review(request, dealer_id):
             review["purchase_date"] = request.POST.get('purchasedate')
             car_models = CarModel.objects.filter(id=request.POST.get('car'))
             car_model = car_models[0]
-            review["car_make"] = car_model.carmake
+            review["car_make"] = car_model.carmake.carmake
             review["car_model"] = car_model.model
             review["car_year"] = str(car_model.year)[0:4]
             print(review)
