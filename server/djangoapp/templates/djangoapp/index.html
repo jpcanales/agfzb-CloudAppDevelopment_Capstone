@@ -52,26 +52,26 @@
         </div>
     </nav>
     <section>
-        <table class="table">
+        <table class="table" id="table" data-filter-control='true'>
             <thead class="table-dark">
               <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Name</th>
-                <th scope="col">id</th>
-                <th scope="col">Address</th>
                 <th scope="col">City</th>
-                <th scope="col">State</th>
+                <th scope="col">Address</th>
                 <th scope="col">Postal Code</th>
+                <th data-field='state' scope="col" data-filter-control="select">State</th>
               </tr>
             </thead>
             <tbody>
                 {% for dealership in dealerships %}
               <tr>
-                <td>{{ dealership.short_name }}</th>
                 <td>{{ dealership.id }}</td>
-                <td>{{ dealership.address }}</td>
+                <td><a href="{% url 'djangoapp:dealer_details' dealership.id %}">{{ dealership.short_name }}<a></th>
                 <td>{{ dealership.city }}</td>
-                <td>{{ dealership.st }}</td>
+                <td>{{ dealership.address }}</td>
                 <td>{{ dealership.zip }}</td>
+                <td>{{ dealership.st }}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -79,5 +79,9 @@
     </section>
     
     </body>
-
+    <script>
+        $(function() {
+            $('#table').bootstrapTable()
+        })
+</script>
 </html>

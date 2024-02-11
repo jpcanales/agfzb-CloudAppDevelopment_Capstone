@@ -11,6 +11,76 @@
 
 </head>
     <body>
+        <nav class="navbar-dark navbar-expand-lg bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Best Cars</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  <a class='nav-link' href="{% url 'djangoapp:about' %}">About Us</a>
+                  <a class="nav-link" href="{% url 'djangoapp:contact' %}">Contact Us</a>
+                  <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                         <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                         <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li>
+                         <form class="form-inline" action="{% url 'djangoapp:login' %}">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                 <input type="text" class="form-control" placeholder="Username" name="username" >
+                                 <input type="password" class="form-control" placeholder="Password" name="psw" >
+                                 <button class="btn btn-info" type="submit">Login</button>
+                                 <a class="btn btn-info" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                            </div>
+                         </form>
+                    </li>
+                    {% endif %}
+                </ul>
+                </div>
+              </div>
+            </div>
+        </nav>
     <!--Add review form here -->
+    <div class="bg-white">
+        <div class="container py-1">
+            <div class="row h-25 align-items-center py-2">
+                <div class="col-lg-12">
+                    <h1 class="display-4">Add a review for {{dealership.full_name}}</h1>
+                    <form action="{% url 'djangoapp:add_review' dealer_id%}"  method="post">
+                        {% csrf_token %}
+                        <div class="container">
+                            <div class="form-group">
+                                <label for="content"><b>Add your review</b></label>
+                                <textarea class="form-control" placeholder="Enter review content: " name="content" rows="2" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                                <label class="form-check-label" for="purchasecheck">Has purchased the car from this dealerhisp</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="car"><b>Select your car (model-make-year)</b></label>
+                                <select name="car" id="car" class="form-select" required>
+                                    {% for car in cars %}
+                                    <option selected value={{car.id}}>{{car.model}}-{{car.carmake}}-{{ car.year|date:"Y" }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="purchasedate"><b>Purchase Date</b></label>
+                                <input class="form-control" type="date" name="purchasedate" id="purchasedate">
+                            </div>
+                            <button class="btn btn-secondary" type="submit">Submit</button>
+                        </div>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
     </body>
 </html>
